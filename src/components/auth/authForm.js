@@ -43,7 +43,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(prev => !prev);
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -93,7 +93,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-700 hover:text-gray-900 focus:outline-none"
           >
             {showPassword ? (
               // Eye slash icon (password visible)
