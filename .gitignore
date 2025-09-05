@@ -11,10 +11,12 @@
 /out/
 
 # production
-/build
+build/
+dist/
 
 # misc
 .DS_Store
+*.pem
 
 # debug
 npm-debug.log*
@@ -27,3 +29,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+
+#Prisma
+prisma/migrations/
