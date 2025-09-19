@@ -69,3 +69,4 @@ enum Role {
   ATTENDEE
   ORGANIZER
   ADMIN
+}
