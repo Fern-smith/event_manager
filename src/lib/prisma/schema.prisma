@@ -1,0 +1,71 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(ATTENDEE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  eventsCreated Event[]   @relation("EventOrganizer")
+  bookings      Booking[]
+  
+  @@map("users")
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  date        DateTime
+  time        String
+  location    String
+  capacity    Int
+  attendees   Int      @default(0)
+  type        String
+  image       String?
+  price       Decimal? @db.Decimal(10, 2)
+  isExternal  Boolean  @default(false)
+  externalId  String?
+  ticketUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  organizerId String
+  organizer   User      @relation("EventOrganizer", fields: [organizerId], references: [id], onDelete: Cascade)
+  bookings    Booking[]
+
+  @@map("events")
+}
+
+model Booking {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+  @@map("bookings")
+}
+
+enum Role {
+  ATTENDEE
+  ORGANIZER
+  ADMIN

@@ -13,7 +13,6 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { useEvents } from "@/context/EventContext";
 import { useState } from "react";
-import { NextResponse } from "next/server";
 
 export default function EventCard({
   event,

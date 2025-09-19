@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>EventHub - Event Management Platform</title>
+        <title>IEventHub - Event Management Platform</title>
         <meta
           name="description"
           content="Discover and manage events in your community"
