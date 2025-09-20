@@ -6,8 +6,8 @@ import EventDiscovery from "@/components/events/EventDiscovery";
 import CreateEventForm from "@/components/events/CreateEventForm";
 import MyEvents from "@/components/dashboard/MyEvents";
 import { useAuth } from "@/context/AuthContext";
-import AuthForm from "./auth/authForm";
-import MyBookings from "./dashboard/Mybookings";
+import AuthForm from "@/components/auth/authForm";
+import MyBookings from "@/components/dashboard/MyBookings";
 
 export default function EventManagementApp() {
   const { currentUser } = useAuth();

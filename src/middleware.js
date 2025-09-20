@@ -1,28 +1,29 @@
 import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
-    // Add any custom middleware logic here
+    // Allow all routes for now
+    return NextResponse.next();
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        // Protect certain routes
-        if (
-          req.nextUrl.pathname.startsWith("/api/events") &&
-          req.method === "POST"
-        ) {
-          return !!token;
+        // Allow access to auth pages without token
+        if (req.nextUrl.pathname.startsWith("/auth")) {
+          return true;
         }
-        if (req.nextUrl.pathname.startsWith("/api/bookings")) {
-          return !!token;
+        // Allow access to public pages
+        if (req.nextUrl.pathname === "/") {
+          return true;
         }
-        return true;
+        // Require token for other pages
+        return !!token;
       }
     }
   }
 );
 
 export const config = {
-  matcher: ["/api/events/:path*", "/api/bookings/:path*", "/dashboard/:path*"]
+  matcher: ["/dashboard/:path*", "/events/create"]
 };

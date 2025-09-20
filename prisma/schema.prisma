@@ -32,7 +32,6 @@ model Event {
   time        String
   location    String
   capacity    Int
-  attendees   Int      @default(0)
   type        String
   image       String?
   price       Decimal? @db.Decimal(10, 2)

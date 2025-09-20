@@ -15,6 +15,18 @@ export default function AuthForm({ isLogin, onSwitch }) {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
+  if (!isLogin && !validatePassword(formData.password)) {
+    setError(
+      "Password must be at least 8 characters with uppercase, lowercase, and number"
+    );
+    setLoading(false);
+    return;
+  }
+
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
@@ -22,7 +34,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
     try {
       let result;
       if (isLogin) {
-        result = await login(formData.email, formData.password, formData.role);
+        result = await login(formData.email, formData.password);
       } else {
         result = await register(
           formData.email,
@@ -137,14 +149,16 @@ export default function AuthForm({ isLogin, onSwitch }) {
           </button>
         </div>
 
-        <select
-          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={formData.role}
-          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-        >
-          <option value="attendee">Event Attendee</option>
-          <option value="organizer">Event Organizer</option>
-        </select>
+        {!isLogin && (
+          <select
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={formData.role}
+            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+          >
+            <option value="attendee">Event Attendee</option>
+            <option value="organizer">Event Organizer</option>
+          </select>
+        )}
 
         <button
           onClick={handleSubmit}

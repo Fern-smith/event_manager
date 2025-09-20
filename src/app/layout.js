@@ -1,20 +1,29 @@
-"use client";
-
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
+import { AuthProvider } from "@/context/AuthContext";
+import { EventProvider } from "@/context/EventContext";
+import ClientSessionProvider from "@/components/ClientSessionProvider";
+
+const inter = Inter({
+  subset: ["latin"],
+  weight: "400",
+  preload: false
+});
+
+export const metadata = {
+  title: "IEventHub - Event Management Platform",
+  description: "Discover and manage events in your community"
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <title>IEventHub - Event Management Platform</title>
-        <meta
-          name="description"
-          content="Discover and manage events in your community"
-        />
-      </head>
-      <body className="font-sans antialiased">
-        <SessionProvider>{children}</SessionProvider>
+      <body className={`${inter.className}main`}>
+        <ClientSessionProvider>
+          <AuthProvider>
+            <EventProvider>{children}</EventProvider>
+          </AuthProvider>
+        </ClientSessionProvider>
       </body>
     </html>
   );
