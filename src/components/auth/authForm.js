@@ -19,17 +19,17 @@ export default function AuthForm({ isLogin, onSwitch }) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
     return regex.test(password);
   };
-  if (!isLogin && !validatePassword(formData.password)) {
-    setError(
-      "Password must be at least 8 characters with uppercase, lowercase, and number"
-    );
-    setLoading(false);
-    return;
-  }
 
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
+
+    if (!isLogin && !validatePassword(formData.password)){
+      setError(
+        "Password must be at least 8 characters with uppercase, lowercase, and number");
+      setLoading(false);
+      return;
+    }
 
     try {
       let result;
@@ -60,7 +60,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">
+      <h2 className="text-2xl font-bold mb-6 text-center text-black">
         {isLogin ? "Login" : "Register"}
       </h2>
 
@@ -75,7 +75,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
           <input
             type="text"
             placeholder="Full Name"
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
@@ -85,7 +85,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
         <input
           type="email"
           placeholder="Email"
-          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
@@ -95,7 +95,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full p-3 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 pr-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             value={formData.password}
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
@@ -151,7 +151,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
 
         {!isLogin && (
           <select
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             value={formData.role}
             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
           >
@@ -160,16 +160,12 @@ export default function AuthForm({ isLogin, onSwitch }) {
           </select>
         )}
 
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
-        >
+        <button onClick={handleSubmit} disabled={loading} className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50">
           {loading ? "Processing..." : isLogin ? "Login" : "Register"}
         </button>
       </div>
 
-      <p className="text-center mt-4">
+      <p className="text-center mt-4 text-black">
         {isLogin ? "Don't have an account? " : "Already have an account? "}
         <button onClick={onSwitch} className="text-blue-500 hover:underline">
           {isLogin ? "Register" : "Login"}

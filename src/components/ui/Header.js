@@ -12,7 +12,7 @@ export default function Header({ currentView, setCurrentView }) {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Calendar className="text-blue-500 mr-2" size={24} />
-            <span className="text-xl font-bold">IEventHub</span>
+            <span className="text-xl font-bold text-black">IEventHub</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -79,7 +79,7 @@ export default function Header({ currentView, setCurrentView }) {
                 </div>
               </>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-black">
                 <User size={20} />
                 <span>Guest</span>
               </div>
