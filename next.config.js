@@ -14,7 +14,7 @@ const nextConfig = {
     ]
   },
   webpack: (config) => {
-    config.resolve.extension.push(".js", "jsx");
+     config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
     return config;
   }
 };
