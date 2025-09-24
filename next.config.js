@@ -12,10 +12,6 @@ const nextConfig = {
         hostname: "img.evbuc.com"
       }
     ]
-  },
-  webpack: (config) => {
-     config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx', '.json'];
-    return config;
   }
 };
 
