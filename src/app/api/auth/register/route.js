@@ -24,7 +24,7 @@ export async function POST(request) {
     }
 
     //validate email format
-    if (!emailRegex.text(email)) {
+    if (!emailRegex.test(email)) {
       return NextResponse.json(
         {
           success: false,
