@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { useEvents } from "@/context/EventContext";
-import EventCard from "./EventCard";
+import { useEvents } from "@/src/context/EventContext";
+import EventCard from "@/src/components/events/EventCard";
 
 export default function EventDiscovery() {
   const { getFilteredEvents } = useEvents();

@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, Plus, User, LogOut } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/src/context/AuthContext";
 
 export default function Header({ currentView, setCurrentView }) {
   const { currentUser, logout } = useAuth();

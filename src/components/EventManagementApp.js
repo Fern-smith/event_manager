@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/ui/Header";
-import EventDiscovery from "@/components/events/EventDiscovery";
-import CreateEventForm from "@/components/events/CreateEventForm";
-import MyEvents from "@/components/dashboard/MyEvents";
-import { useAuth } from "@/context/AuthContext";
-import AuthForm from "@/components/auth/authForm";
-import MyBookings from "@/components/dashboard/MyBookings";
+import Header from "@/src/components/ui/Header";
+import EventDiscovery from "@/src/components/events/EventDiscovery";
+import CreateEventForm from "@/src/components/events/CreateEventForm";
+import MyEvents from "@/src/components/dashboard/MyEvents";
+import { useAuth } from "@/src/context/AuthContext";
+import AuthForm from "@/src/components/auth/authForm";
+import MyBookings from "@/src/components/dashboard/MyBookings";
 
 export default function EventManagementApp() {
   const { currentUser } = useAuth();

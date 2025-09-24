@@ -2,9 +2,9 @@
 
 import { Calendar, Plus } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/context/AuthContext";
-import EventCard from "@/components/events/EventCard";
-import EditEventForm from "@/components/events/EditEventForm";
+import { useAuth } from "@/src/context/AuthContext";
+import EventCard from "@/src/components/events/EventCard";
+import EditEventForm from "@/src/components/events/EditEventForm";
 
 export default function MyEvents({ setCurrentView }) {
   const { currentUser } = useAuth();

@@ -10,8 +10,8 @@ import {
   Trash2,
   AlertTriangle
 } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
-import { useEvents } from "@/context/EventContext";
+import { useAuth } from "@/src/context/AuthContext";
+import { useEvents } from "@/src/context/EventContext";
 import { useState } from "react";
 
 export default function EventCard({

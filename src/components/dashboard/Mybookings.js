@@ -1,9 +1,10 @@
 "use client";
 
 import { Calendar } from "lucide-react";
-import { useAuth } from "@/context/AuthContext";
-import { useEvents } from "@/context/EventContext";
-import EventCard from "@/components/events/EventCard";
+import { useAuth } from "@/src/context/AuthContext";
+import { useEvents } from "@/src/context/EventContext";
+import EventCard from "@/src/components/events/EventCard";
+
 
 export default function MyBookings({ setCurrentView }) {
   const { currentUser } = useAuth();

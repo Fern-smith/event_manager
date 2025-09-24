@@ -1,7 +1,7 @@
 import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
-import { EventProvider } from "@/context/EventContext";
-import ClientSessionProvider from "@/components/ClientSessionProvider";
+import { AuthProvider } from "@/src/context/AuthContext";
+import { EventProvider } from "@/src/context/EventContext";
+import ClientSessionProvider from "@/src/components/ClientSessionProvider";
 
 export const metadata = {
   title: "IEventHub - Event Management Platform",
