@@ -12,6 +12,10 @@ const nextConfig = {
         hostname: "img.evbuc.com"
       }
     ]
+  },
+  webpack: (config) => {
+    config.resolve.extension.push(".js", "jsx");
+    return config;
   }
 };
 
