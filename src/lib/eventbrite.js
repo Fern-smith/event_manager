@@ -14,25 +14,30 @@ const eventbriteClient = axios.create({
 export class EventbriteService {
   static async searchEvents(params = {}) {
     try {
-      const {
-        location = "Louisville, KY",
-        q: query,
-        "start_date.range_start": startDate,
-        sort_by = "date"
-      } = params;
+      console.log("Eventbrite API called with params:", params);
+      console.log("API key exists:", !!EVENTBRITE_API_KEY);
+      console.log("API URL:", EVENTBRITE_API_URL);
+
+      const location = params.location || "New York, NY";
 
       const searchParams = {
         "location.address": location,
-        "location.within": "25mi",
-        expand: "venue,ticket_availability,logo",
-        sort_by,
+        "location.within": "30mi",
+        expand: "venue,logo,organizer,category",
+        sort_by: "date",
         "start_date.range_start": new Date().toISOString(),
-        ...params
+        ...(params.q && { q: params.q })
       };
+
+      console.log("Searching for events near:  ${location}");
 
       const response = await eventbriteClient.get("/events/search/", {
         params: searchParams
       });
+
+      console.log(
+        "Found ${response.data.events?.length || 0} events near ${location}"
+      );
 
       return {
         success: true,

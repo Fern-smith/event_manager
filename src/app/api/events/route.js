@@ -48,14 +48,11 @@ export async function GET(request) {
 
     // Fetch Eventbrite events (skip for community tab)
     if (tab !== "community") {
-      const eventbriteParams = {
+      const eventbriteParams = await EventbriteService.searchEvents ({
         q: query,
         "location.address": location
-      };
+      });
 
-      const eventbriteResult = await EventbriteService.searchEvents(
-        eventbriteParams
-      );
       if (eventbriteResult.success) {
         externalEvents = eventbriteResult.events;
       }

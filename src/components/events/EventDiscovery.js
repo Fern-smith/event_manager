@@ -1,18 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { useEvents } from "@/src/context/EventContext";
 import EventCard from "@/src/components/events/EventCard";
+import LocationSelector from "@/src/components/ui/LocationSelector";
 
 export default function EventDiscovery() {
-  const { getFilteredEvents } = useEvents();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [activeTab, setActiveTab] = useState("all");
+  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const filteredEvents = getFilteredEvents(searchTerm, filterType, activeTab);
+  useEffect(() => {
+    fetchEvents();
+  }, [selectedLocation, activeTab, searchTerm, filterType]);
 
+  const fetchEvents = async () => {
+    setLoading(true);
+    try{
+      const params = {
+        q: searchTerm,
+        type: filterType,
+        tab: activeTab,
+        location: selectedLocation
+      };
+
+      const response = await fetch('/api/events?' + new URLSearchParams(params));
+      const result = await response.json();
+
+      if (result.success) {
+        setEvents(result.events);
+      }
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLocationChange = (location)=> {
+    setSelectedLocation(location);
+  };
+  
   return (
     <div className="space-y-6">
       {/* Search and Filters */}
@@ -40,6 +72,12 @@ export default function EventDiscovery() {
             <option value="Concert">Concert</option>
             <option value="Exhibition">Exhibition</option>
           </select>
+
+          {/* ADDED: LocationSelector component */}
+          <LocationSelector 
+            currentLocation={selectedLocation}
+            onLocationChange={handleLocationChange}
+          />
         </div>
 
         {/* Tab Navigation */}
@@ -58,25 +96,42 @@ export default function EventDiscovery() {
                 ? "All Events"
                 : tab === "community"
                 ? "My Community"
-                : "Nearby Events"}
+                : `Near ${selectedLocation}`}
             </button>
           ))}
         </div>
+
+        {/* Location Info */}
+        <div className="mt-2 text-sm text-gray-600">
+          {activeTab === "all" && `Showing events worldwide and near ${selectedLocation}`}
+          {activeTab === "nearby" && `Showing events within 25 miles of ${selectedLocation}`}
+          {activeTab === "community" && "Showing local community events"}
+        </div>
       </div>
 
-      {/* Events Grid */}
+      {/*  Loading State */}
+      {loading && (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
+          <div className="text-gray-500">Searching for events...</div>
+        </div>
+      )}
+
+      {/*  Events Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredEvents.map((event) => (
+        {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
       </div>
-
-      {filteredEvents.length === 0 && (
+      
+      {/* No Events Found */}
+      {!loading && events.length === 0 && (
         <div className="text-center py-12 text-gray-500">
           <Search size={48} className="mx-auto mb-4 opacity-50" />
-          <p>No events found matching your criteria</p>
+          <p>No events found for {selectedLocation}</p>
+          <p className="text-sm mt-2">Try selecting a different city or adjusting your search terms</p>
         </div>
       )}
     </div>
-  );
+  );   
 }

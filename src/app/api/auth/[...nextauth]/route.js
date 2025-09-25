@@ -25,7 +25,7 @@ export const authOptions = {
           });
 
           if (!user) {
-            throw new Error("No user found with this email");
+            return null;
           }
 
           const passwordValid = await bcrypt.compare(
@@ -34,7 +34,7 @@ export const authOptions = {
           );
 
           if (!passwordValid) {
-            throw new Error("Invalid password");
+            return null;
           }
 
           // Return user object that will be saved in JWT
