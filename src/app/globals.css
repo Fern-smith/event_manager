@@ -47,3 +47,13 @@ body {
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+* {
+  color: inherit;
+}
+
+input,
+textarea,
+select{
+  color: #000000 !important;
+}

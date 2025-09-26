@@ -1,7 +1,7 @@
 // app/page.js
 "use client";
 
-import EventManagementApp from "@/src/components/EventManagementApp";
+import EventManagementApp from "@/components/EventManagementApp";
 
 export default function HomePage() {
   return <EventManagementApp />;

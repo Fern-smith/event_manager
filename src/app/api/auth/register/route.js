@@ -7,10 +7,20 @@ const prisma = new PrismaClient();
 //Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Password validation regex - matches AuthForm requirements
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+
 export async function POST(request) {
   try {
     const body = await request.json();
     const { name, email, password, role } = body;
+
+    console.log("Registration attempt:", {
+      name: !!name,
+      email: !!email,
+      password: !!password,
+      role
+    });
 
     //Validate required fields
     if (!name || !email || !password || !role) {
@@ -35,11 +45,12 @@ export async function POST(request) {
     }
 
     //Validate password strength (minimum 6 characters)
-    if (password.length < 6) {
+    if (!passwordRegex.test(password)) {
       return NextResponse.json(
         {
           success: false,
-          error: "Password must be at least 6 characters long"
+          error:
+            "Password must be at least 8 characters with uppercase, lowercase, and number"
         },
         { status: 400 }
       );
@@ -93,6 +104,8 @@ export async function POST(request) {
         //Don't return password hash
       }
     });
+
+    console.log("User created successfully:", user.email);
 
     return NextResponse.json({
       success: true,

@@ -40,13 +40,25 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password, role) => {
     try {
-      //use NextAuth signIn - this actually authenticates against your database
-      // Simulate API call
+      //Debug logging
+      console.log("Login attempt with:", {
+        email: !!email,
+        password: !!password
+      });
+
+      //Validate inputs
+      if (!email || !password) {
+        return { success: false, error: "Email and password are required" };
+      }
+
+      //Use NextAuth signIn - this actually authenticates against your database
       const result = await signIn("credentials", {
-        email,
-        password,
+        email: email.trim(), //remove whitespace
+        password: password,
         redirect: false
       });
+
+      console.log("SignIn result:", result);
 
       if (result?.error) {
         console.error("Login error:", result.error);
@@ -72,19 +84,24 @@ export function AuthProvider({ children }) {
 
   const register = async (email, password, role, name) => {
     try {
+      //validate inputs
+      if (!email || !password || !name) {
+        return { success: false, error: "All fields are required" };
+      }
       //First register the user via your API endpoint
       const response = await fetch("/api/auth/register", {
         method: "POST",
-        header: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
-          password,
+          email: email.trim(),
+          password: password,
           role: role.toUpperCase(),
-          name
+          name: name.trim()
         })
       });
 
       const data = await response.json();
+      console.log("Registration response:", data);
 
       if (!response.ok) {
         return {

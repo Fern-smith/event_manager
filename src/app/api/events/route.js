@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
-import { EventbriteService } from "@/lib/eventbrite";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { EventbriteService } from "@/lib/eventbrite";
 
-// My Change
+//Update import 
+
+const prisma = new PrismaClient();
 
 export async function GET(request) {
   try {
@@ -48,19 +49,23 @@ export async function GET(request) {
 
     // Fetch Eventbrite events (skip for community tab)
     if (tab !== "community") {
-      const eventbriteParams = await EventbriteService.searchEvents ({
+    try {
+      const eventbriteResult = await EventbriteService.searchEvents({
         q: query,
-        "location.address": location
+        location: location
       });
 
-      if (eventbriteResult.success) {
+      if (eventbriteResult && eventbriteResult.success) {
         externalEvents = eventbriteResult.events;
       }
+    } catch (eventbriteError){
+      console.error("Eventbrite API failed:", eventbriteError);
     }
+  }
 
-    // Combine events based on tab
-    let allEvents = [];
-    switch (tab) {
+  // Combine events based on tab
+  let allEvents = [];
+  switch (tab) {
       case "community":
         allEvents = transformedLocalEvents;
         break;

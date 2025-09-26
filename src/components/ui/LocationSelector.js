@@ -14,8 +14,8 @@ export default function LocationSelector({
     "New York, NY",
     "Los Angeles, CA",
     "Chicago, IL",
-    "Cincinnati,OH",
-    "Louisville,KY",
+    "Cincinnati, OH",
+    "Louisville, KY",
     "Houston, TX",
     "Phoenix, AZ",
     "Philadelphia, PA",
@@ -52,27 +52,27 @@ export default function LocationSelector({
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg hover:bg-gray-50 transition-colors"
+        className="flex items-center gap-2 px-4 py-2 bg-white border rounded-lg hover:bg-gray-50 transition-colors text-black"
       >
         <MapPin size={16} />
-        <span className="text-sm">{currentLocation}</span>
+        <span className="text-sm font-medium">{currentLocation}</span>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-80 bg-white border rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+        <div className="absolute top-full left-0 mt-2 w-80 bg-white border rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto focus:ring-2 focus:ring-blue-500 text-black">
           <div className="p-3 border-b">
             <div className="flex gap-2">
               <input
                 type="text"
                 placeholder="Enter city, state (e.g., Austin, TX)"
-                className="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                 value={customLocation}
                 onChange={(e) => setCustomLocation(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleCustomLocation()}
               />
               <button
                 onClick={handleCustomLocation}
-                clasName="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
               >
                 <Search size={16} />
               </button>

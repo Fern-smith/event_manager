@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/src/context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 export default function AuthForm({ isLogin, onSwitch }) {
   const { login, register } = useAuth();
@@ -20,13 +20,22 @@ export default function AuthForm({ isLogin, onSwitch }) {
     return regex.test(password);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
     setError("");
 
-    if (!isLogin && !validatePassword(formData.password)){
+    console.log("Form values:", {
+      email: formData.email,
+      password: !!formData.password,
+      isLogin
+    });
+
+    //Validate password for registration
+    if (!isLogin && !validatePassword(formData.password)) {
       setError(
-        "Password must be at least 8 characters with uppercase, lowercase, and number");
+        "Password must be at least 8 characters with uppercase, lowercase, and number"
+      );
       setLoading(false);
       return;
     }
@@ -45,9 +54,13 @@ export default function AuthForm({ isLogin, onSwitch }) {
       }
 
       if (!result.success) {
+        console.log("Authentication successful!");
+        setError(result.error);
+      } else {
         setError(result.error);
       }
     } catch (err) {
+      console.error("Form submission error:", err);
       setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
@@ -70,7 +83,7 @@ export default function AuthForm({ isLogin, onSwitch }) {
         </div>
       )}
 
-      <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {!isLogin && (
           <input
             type="text"
@@ -151,23 +164,35 @@ export default function AuthForm({ isLogin, onSwitch }) {
 
         {!isLogin && (
           <select
-            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black bg-white"
             value={formData.role}
             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
           >
-            <option value="attendee">Event Attendee</option>
-            <option value="organizer">Event Organizer</option>
+            <option value="attendee" className="text-black">
+              Event Attendee
+            </option>
+            <option value="organizer" classsName="text-black">
+              Event Organizer
+            </option>
           </select>
         )}
 
-        <button onClick={handleSubmit} disabled={loading} className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50">
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
+        >
           {loading ? "Processing..." : isLogin ? "Login" : "Register"}
         </button>
-      </div>
+      </form>
 
       <p className="text-center mt-4 text-black">
         {isLogin ? "Don't have an account? " : "Already have an account? "}
-        <button onClick={onSwitch} className="text-blue-500 hover:underline">
+        <button
+          type="button"
+          onClick={onSwitch}
+          className="text-blue-500 hover:underline"
+        >
           {isLogin ? "Register" : "Login"}
         </button>
       </p>
