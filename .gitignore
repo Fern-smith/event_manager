@@ -25,11 +25,10 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+.env
 
 # vercel
 .vercel
-
 
 #Prisma
 prisma/migrations/
