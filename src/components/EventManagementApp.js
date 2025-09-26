@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Header from "@/components/ui/Header";
-import EventDiscovery from "@/components/events/EventDiscovery";
-import CreateEventForm from "@/components/events/CreateEventForm";
-import MyEvents from "@/components/dashboard/MyEvents";
-import { useAuth } from "@/context/AuthContext";
-import AuthForm from "@/components/auth/authForm";
-import MyBookings from "@/components/dashboard/MyBookings";
+import { useState } from 'react';
+import Header from '@/components/ui/Header';
+import EventDiscovery from '@/components/events/EventDiscovery';
+import CreateEventForm from '@/components/events/CreateEventForm';
+import MyEvents from '@/components/dashboard/MyEvents';
+import { useAuth } from '@/context/AuthContext';
+import AuthForm from '@/components/auth/authForm';
+import MyBookings from '@/components/dashboard/Mybookings';
 
 export default function EventManagementApp() {
   const { currentUser } = useAuth();
-  const [currentView, setCurrentView] = useState("discover");
+  const [currentView, setCurrentView] = useState('discover');
   const [showLogin, setShowLogin] = useState(true);
 
   return (
@@ -26,15 +26,15 @@ export default function EventManagementApp() {
           />
         ) : (
           <>
-            {currentView === "discover" && <EventDiscovery />}
-            {currentView === "create" && currentUser.role === "organizer" && (
+            {currentView === 'discover' && <EventDiscovery />}
+            {currentView === 'create' && currentUser.role === 'organizer' && (
               <CreateEventForm setCurrentView={setCurrentView} />
             )}
-            {currentView === "bookings" && (
+            {currentView === 'bookings' && (
               <MyBookings setCurrentView={setCurrentView} />
             )}
-            {currentView === "my-events" &&
-              currentUser.role === "organizer" && (
+            {currentView === 'my-events' &&
+              currentUser.role === 'organizer' && (
                 <MyEvents setCurrentView={setCurrentView} />
               )}
           </>
