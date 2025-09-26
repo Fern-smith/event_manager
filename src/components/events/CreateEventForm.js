@@ -1,42 +1,42 @@
-"use client";
+'use client';
 
-import { useAuth } from "@/src/context/AuthContext";
-import { useEvents } from "@/src/context/EventContext";
-import { useState } from "react";
+import { useAuth } from '@/context/AuthContext';
+import { useEvents } from '@/context/EventContext';
+import { useState } from 'react';
 
 export default function CreateEventForm({ setCurrentView }) {
   const { currentUser } = useAuth();
   const { createEvent } = useEvents();
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    date: "",
-    time: "",
-    location: "",
-    capacity: "",
-    type: "Workshop",
-    image: ""
+    name: '',
+    description: '',
+    date: '',
+    time: '',
+    location: '',
+    capacity: '',
+    type: 'Workshop',
+    image: '',
   });
 
   const handleSubmit = () => {
     const eventData = {
       ...formData,
-      capacity: parseInt(formData.capacity)
+      capacity: parseInt(formData.capacity),
     };
 
     createEvent(eventData, currentUser.name);
-    setCurrentView("discover");
+    setCurrentView('discover');
 
     // Reset form
     setFormData({
-      name: "",
-      description: "",
-      date: "",
-      time: "",
-      location: "",
-      capacity: "",
-      type: "Workshop",
-      image: ""
+      name: '',
+      description: '',
+      date: '',
+      time: '',
+      location: '',
+      capacity: '',
+      type: 'Workshop',
+      image: '',
     });
   };
 
@@ -173,7 +173,7 @@ export default function CreateEventForm({ setCurrentView }) {
               Create Event
             </button>
             <button
-              onClick={() => setCurrentView("discover")}
+              onClick={() => setCurrentView('discover')}
               className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel

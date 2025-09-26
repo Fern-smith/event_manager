@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Calendar, Plus } from "lucide-react";
-import { useState, useEffect } from "react";
-import { useAuth } from "@/src/context/AuthContext";
-import EventCard from "@/src/components/events/EventCard";
-import EditEventForm from "@/src/components/events/EditEventForm";
+import { Calendar, Plus } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import EventCard from '@/components/events/EventCard';
+import EditEventForm from '@/components/events/EditEventForm';
 
 export default function MyEvents({ setCurrentView }) {
   const { currentUser } = useAuth();
@@ -20,7 +20,7 @@ export default function MyEvents({ setCurrentView }) {
     if (!currentUser) return;
 
     try {
-      const response = await fetch("/api/events");
+      const response = await fetch('/api/events');
       const result = await response.json();
 
       if (result.success) {
@@ -34,7 +34,7 @@ export default function MyEvents({ setCurrentView }) {
         setMyEvents(userEvents);
       }
     } catch (error) {
-      console.error("Error loading events:", error);
+      console.error('Error loading events:', error);
     } finally {
       setLoading(false);
     }
@@ -56,20 +56,20 @@ export default function MyEvents({ setCurrentView }) {
   const handleDeleteEvent = async (eventId) => {
     try {
       const response = await fetch(`/api/events/${eventId}`, {
-        method: "DELETE"
+        method: 'DELETE',
       });
 
       const result = await response.json();
 
       if (result.success) {
         setMyEvents((prev) => prev.filter((event) => event.id !== eventId));
-        alert("Event deleted successfully!");
+        alert('Event deleted successfully!');
       } else {
-        alert(result.error || "Failed to delete event");
+        alert(result.error || 'Failed to delete event');
       }
     } catch (error) {
-      console.error("Delete error:", error);
-      alert("Failed to delete event");
+      console.error('Delete error:', error);
+      alert('Failed to delete event');
     }
   };
 
@@ -94,7 +94,7 @@ export default function MyEvents({ setCurrentView }) {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">My Events ({myEvents.length})</h2>
         <button
-          onClick={() => setCurrentView("create")}
+          onClick={() => setCurrentView('create')}
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center gap-2"
         >
           <Plus size={16} />
@@ -129,7 +129,7 @@ export default function MyEvents({ setCurrentView }) {
           <Calendar size={48} className="mx-auto mb-4 opacity-50" />
           <p>You haven't created any events yet</p>
           <button
-            onClick={() => setCurrentView("create")}
+            onClick={() => setCurrentView('create')}
             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 flex items-center gap-2 mx-auto"
           >
             <Plus size={16} />

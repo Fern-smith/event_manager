@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import { Calendar } from "lucide-react";
-import { useAuth } from "@/src/context/AuthContext";
-import { useEvents } from "@/src/context/EventContext";
-import EventCard from "@/src/components/events/EventCard";
-
+import { Calendar } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { useEvents } from '@/context/EventContext';
+import EventCard from '@/components/events/EventCard';
 
 export default function MyBookings({ setCurrentView }) {
   const { currentUser } = useAuth();
   const { getUserBookings, cancelBooking } = useEvents();
 
-  const userBookings = getUserBookings(currentUser?.id || "");
+  const userBookings = getUserBookings(currentUser?.id || '');
 
   const upcomingBookings = userBookings.filter(
     (booking) => new Date(booking.event.date) >= new Date()
@@ -22,7 +21,7 @@ export default function MyBookings({ setCurrentView }) {
   const handleCancelBooking = async (bookingId) => {
     const result = await cancelBooking(bookingId);
     if (result.success) {
-      alert("Booking cancelled successfully");
+      alert('Booking cancelled successfully');
     } else {
       alert(result.error);
     }
@@ -74,7 +73,7 @@ export default function MyBookings({ setCurrentView }) {
           <Calendar size={48} className="mx-auto mb-4 opacity-50" />
           <p>No bookings yet</p>
           <button
-            onClick={() => setCurrentView("discover")}
+            onClick={() => setCurrentView('discover')}
             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
           >
             Discover Events

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Calendar,
@@ -8,11 +8,11 @@ import {
   ExternalLink,
   Edit,
   Trash2,
-  AlertTriangle
-} from "lucide-react";
-import { useAuth } from "@/src/context/AuthContext";
-import { useEvents } from "@/src/context/EventContext";
-import { useState } from "react";
+  AlertTriangle,
+} from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { useEvents } from '@/context/EventContext';
+import { useState } from 'react';
 
 export default function EventCard({
   event,
@@ -20,13 +20,13 @@ export default function EventCard({
   showOrganizerActions = false,
   onCancel = null,
   onEdit = null,
-  onDelete = null
+  onDelete = null,
 }) {
   const { currentUser } = useAuth();
   const { bookEvent, getUserBookings } = useEvents();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const userBookings = getUserBookings(currentUser?.id || "");
+  const userBookings = getUserBookings(currentUser?.id || '');
   const isBooked = userBookings.some((b) => b.eventId === event.id);
   const spotsLeft = event.capacity - event.attendees;
 
@@ -37,19 +37,19 @@ export default function EventCard({
 
   const handleBook = async () => {
     if (!currentUser) {
-      alert("Please login to book events");
+      alert('Please login to book events');
       return;
     }
 
     if (event.isExternal) {
-      window.open(event.ticketUrl, "_blank");
+      window.open(event.ticketUrl, '_blank');
       return;
     }
 
     const result = await bookEvent(event.id, currentUser.id);
 
     if (result.success) {
-      alert("Booking confirmed!");
+      alert('Booking confirmed!');
     } else {
       alert(result.error);
     }
@@ -113,7 +113,7 @@ export default function EventCard({
             className="w-full h-full object-cover"
             onError={(e) => {
               e.target.src =
-                "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=200&fit=crop";
+                'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=200&fit=crop';
             }}
           />
         )}
@@ -224,17 +224,17 @@ export default function EventCard({
                 disabled={isBooked || spotsLeft === 0}
                 className={`flex-1 py-2 px-4 rounded transition-colors ${
                   isBooked
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : spotsLeft === 0
-                    ? "bg-red-300 text-red-700 cursor-not-allowed"
-                    : "bg-blue-500 text-white hover:bg-blue-600"
+                    ? 'bg-red-300 text-red-700 cursor-not-allowed'
+                    : 'bg-blue-500 text-white hover:bg-blue-600'
                 }`}
               >
                 {isBooked
-                  ? "Already Booked"
+                  ? 'Already Booked'
                   : spotsLeft === 0
-                  ? "Event Full"
-                  : "Book Event"}
+                  ? 'Event Full'
+                  : 'Book Event'}
               </button>
             )}
           </div>
