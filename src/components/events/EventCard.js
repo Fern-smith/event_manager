@@ -8,8 +8,14 @@ import {
   ExternalLink,
   Edit,
   Trash2,
+<<<<<<< HEAD
   AlertTriangle,
 } from 'lucide-react';
+=======
+  AlertTriangle
+} from 'lucide-react';
+
+>>>>>>> d96973c (Update forgot password ?)
 import { useAuth } from '@/context/AuthContext';
 import { useEvents } from '@/context/EventContext';
 import { useState } from 'react';
