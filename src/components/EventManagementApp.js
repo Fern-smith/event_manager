@@ -7,11 +7,7 @@ import CreateEventForm from '@/components/events/CreateEventForm';
 import MyEvents from '@/components/dashboard/MyEvents';
 import { useAuth } from '@/context/AuthContext';
 import AuthForm from '@/components/auth/authForm';
-<<<<<<< HEAD
 import MyBookings from '@/components/dashboard/Mybookings';
-=======
-import MyBookings from '@/components/dashboard/MyBookings';
->>>>>>> d96973c (Update forgot password ?)
 
 export default function EventManagementApp() {
   const { currentUser } = useAuth();
